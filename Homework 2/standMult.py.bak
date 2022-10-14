@@ -1,0 +1,113 @@
+import random
+from time import time
+
+## Function to convert multiplicand and multiplier to decimal
+def decToBin(num):
+    if num < 0:
+        num = num * -1
+
+    tempDigit = 0
+    bin = ''
+    while num > 0:
+        tempDigit = num % 2
+        bin += str(tempDigit)
+        num = num // 2
+    bin = bin[::-1]
+    return bin
+
+## Function to add binary numbers
+def binAdd(a, b):
+    carry = 0
+    sum = []
+    sumFinal = ""
+    
+## Make sure length of the terms are equivalent
+    max_len = max(len(a),len(b))
+    a = a.zfill(max_len)
+    b = b.zfill(max_len)
+    
+    i = 0
+## Reverse iteration and condition handling
+    while i > - (len(a)):
+        i -= 1
+        if int(a[i]) + int(b[i]) + carry == 0:
+            sum.insert(0, 0)
+            carry = 0
+        elif int(a[i]) + int(b[i]) + carry == 1:
+            sum.insert(0, 1)
+            carry = 0
+        elif int(a[i]) + int(b[i]) + carry == 2:
+            sum.insert(0, 0)
+            carry = 1
+        elif int(a[i]) + int(b[i]) + carry == 3:
+            sum.insert(0, 1)
+            carry = 1
+## Carry handler
+    if carry == 1:
+        sum.insert(0,"1")
+    for j in sum:
+        sumFinal += str(j)
+    return sumFinal
+      
+    
+## Function to multiply binary numbers
+def standMult(mcand, mplier, ocand, oplier):
+    twosTemp = []
+    products = []
+    multSum = "0"
+    M = str(mcand)
+    Q = str(mplier)
+    
+   
+    if (ocand != 0) and (oplier != 0):
+        for i in reversed(Q):
+            if i == "1":
+                products.append(M) 
+            elif i == "0":
+                products.append("0")
+            M = M + "0"
+            
+    for i in products:
+        multSum = binAdd(multSum, i)
+        
+## Checks for opposite signs and performs two's complement
+    if (ocand < 0 and oplier > 0) or (ocand > 0 and oplier < 0):
+        for i in multSum:
+            twosTemp.append(int(i))
+           
+        for i in reversed(twosTemp):            
+            if i == 0:
+                twosTemp[i] = "1"
+            elif i == 1:
+                twosTemp[i] = "0"
+        multSum = ""
+        for i in twosTemp:
+            multSum += twosTemp[int(i)]
+        multSum = binAdd(multSum, "1")
+        
+        
+    multSum = int(multSum)
+    decSum = ocand * oplier
+    multTuple = (decSum, multSum)
+    return multTuple
+
+## Main driver function
+def main():
+    cand = random.randint(-4294967297, 4294967295)
+    plier = random.randint(-4294967297, 4294967295)
+    candBin = decToBin(cand)
+    plierBin = decToBin(plier)
+
+    standMult(candBin, plierBin, cand, plier)
+    
+main()
+
+
+
+
+
+
+
+
+            
+        

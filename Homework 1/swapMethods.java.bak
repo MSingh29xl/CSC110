@@ -1,0 +1,96 @@
+import java.io.*;
+import java.util.Random;
+import java.lang.reflect.Method;
+
+public class swapMethods {
+
+    static void swapByTemp(int a, int b) {
+        System.out.println("x = "+ a);
+        System.out.println("y = "+ b);
+        int temp = a;
+        a = b;
+        b = temp;
+        System.out.println("x = "+ a);
+        System.out.println("y = "+ b);
+    }
+
+    static void swapByXOR(int a, int b) {
+        System.out.println("x = "+ a);
+        System.out.println("y = "+ b);
+        a = a ^ b;
+        b = a ^ b;
+        a = a ^ b;
+        System.out.println("x = "+ a);
+        System.out.println("y = "+ b);
+    }
+
+    static void swapByAddSub(int a, int b) {
+        System.out.println("x = "+ a);
+        System.out.println("y = "+ b);
+        a = a + b;
+        b = a - b;
+        a = a - b;
+        System.out.println("x = "+ a);
+        System.out.println("y = "+ b);
+    }
+
+    static void swapByMultDiv(int a, int b) {
+        System.out.println("x = "+ a);
+        System.out.println("y = "+ b);
+        a = a * b;
+        b = a / b;
+        a = a / b;
+        System.out.println("x = "+ a);
+        System.out.println("y = "+ b);
+    }
+
+    static void takeAvgTime(long[] list) {
+        float avgTime = 0;
+        for(int i = 0; i < list.length; i++){
+            avgTime += list[i];
+            }
+        avgTime = avgTime / 10000;
+        System.out.println(avgTime);
+    }
+
+    public static void main(String a[]) {
+        Random rand = new Random();
+        int counter = 0;
+        long[] tempList = new long[10000];
+        long[] XORList = new long[10000];
+        long[] AddSubList = new long[10000];
+        long[] MultDivList = new long[10000];
+        long beforeTime = 0;
+        long afterTime = 0;
+        long oneAvg;
+        while (counter < 10000) {
+            int y = rand.nextInt(1, 10000);
+            int x = rand.nextInt(1, 10000) + y;
+            beforeTime = (System.currentTimeMillis() * 1000);
+            swapByTemp(x, y);
+            afterTime = (System.currentTimeMillis() * 1000);
+            oneAvg = afterTime - beforeTime;
+            tempList[counter] = oneAvg;
+            beforeTime = (System.currentTimeMillis() * 1000);
+            swapByXOR(x, y);
+            afterTime = (System.currentTimeMillis() * 1000);
+            oneAvg = afterTime - beforeTime;
+            XORList[counter] = oneAvg;
+            beforeTime = (System.currentTimeMillis() * 1000);
+            swapByAddSub(x, y);
+            afterTime = (System.currentTimeMillis() * 1000);
+            oneAvg = afterTime - beforeTime;
+            AddSubList[counter] = oneAvg;
+            beforeTime = (System.currentTimeMillis() * 1000);
+            swapByMultDiv(x, y);
+            afterTime = (System.currentTimeMillis() * 1000);
+            oneAvg = afterTime - beforeTime;
+            MultDivList[counter] = oneAvg;
+            counter++;
+            }
+        takeAvgTime(tempList);
+        takeAvgTime(XORList);
+        takeAvgTime(AddSubList);
+        takeAvgTime(MultDivList);
+    }
+}

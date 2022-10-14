@@ -1,0 +1,82 @@
+import random
+from time import time
+
+def swapByTemp(a, b):
+    print("X is : ", int(a))
+    print("Y is : ", int(b))
+    temp = a
+    a = b
+    b = temp
+    print("X is : ", int(a))
+    print("Y is : ", int(b))
+
+def swapByXOR(a, b):
+    print("X is : ", int(a))
+    print("Y is : ", int(b))
+    a = a ^ b
+    b = a ^ b
+    a = a ^ b
+    print("X is : ", int(a))
+    print("Y is : ", int(b))
+
+def swapByAddSub(a, b):
+    print("X is : ", int(a))
+    print("Y is : ", int(b))
+    a = a + b
+    b = a - b
+    a = a - b
+    print("X is : ", int(a))
+    print("Y is : ", int(b))
+
+def swapByMultDiv(a, b):
+    print("X is : ", int(a))
+    print("Y is : ", int(b))
+    a = a * b
+    b = a / b
+    a = a / b
+    print("X is : ", int(a))
+    print("Y is : ", int(b))
+
+def takeOneTime(listEx, func):
+    y = random.randrange(1, 10000)
+    x = random.randrange(1, 10000) +y
+    beforeTime = int(time() * 1000000)
+    func(x, y)
+    afterTime = int(time() * 1000000)
+    oneAvg = afterTime - beforeTime
+    listEx.append(oneAvg)
+    return listEx
+
+def takeAvgTime(outList):
+    avgTime = 0
+    for i in outList:
+        avgTime += i
+    avgTime = avgTime / 10000
+    return avgTime
+
+def main():
+    counter = 0
+    tempList = []
+    XORList = []
+    AddSubList = []
+    MultDivList = []
+    avgTemp = 0
+    avgXOR = 0
+    avgAddSub = 0
+    avgMultDiv = 0
+    while counter <= 10000:
+        takeOneTime(tempList, swapByTemp)
+        takeOneTime(XORList, swapByXOR)
+        takeOneTime(AddSubList, swapByAddSub)
+        takeOneTime(MultDivList, swapByMultDiv)
+        counter += 1
+    avgTemp = takeAvgTime(tempList)
+    avgXOR = takeAvgTime(XORList)
+    avgAddSub = takeAvgTime(AddSubList)
+    avgMultDiv = takeAvgTime(MultDivList)
+    print("Average time for Temp: ", avgTemp, "us")
+    print("Average time for XOR: ", avgXOR, "us")
+    print("Average time for AddSub: ", avgAddSub, "us")
+    print("Average time for MultDiv: ", avgMultDiv, "us")
+
+main()
